@@ -25,12 +25,52 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { Notify } from "quasar";
 const email = ref("");
 const password = ref("");
 const router = useRouter();
+const validateEmail = (email) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+};
 const handleLogin = () => {
   // Lógica para manejar el inicio de sesión
   // console.log('Iniciando sesión con:', email.value, password.value);
+  if (!email.value) {
+    Notify.create({
+      message: "El correo electrónico no puede estar vacío.",
+      color: "negative",
+      position: "top",
+      timeout: 3000,
+    });
+    return;
+  } else if (!validateEmail(email.value)) {
+    Notify.create({
+      message: "El formato del correo electrónico no es válido.",
+      color: "negative",
+      position: "top",
+      timeout: 3000,
+    });
+    return;
+  }
+
+  // Validar que la contraseña no esté vacía
+
+  if (!password.value) {
+    Notify.create({
+      message: "La contraseña no puede estar vacía.",
+      color: "negative",
+      position: "top",
+      timeout: 3000,
+    });
+    return;
+  }
+  Notify.create({
+    message: "Ingresó correctamente",
+    color: "positive", // Puedes usar 'negative', 'warning', 'info', etc.
+    position: "top", // Posición de la notificación
+    timeout: 3000, // Duración en milisegundos
+  });
   router.push("/inicio");
 };
 
