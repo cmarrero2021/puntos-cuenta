@@ -2,6 +2,7 @@
   <q-drawer
     :model-value="drawerOpen"
     @update:model-value="updateDrawer"
+    behavior="desktop"
     side="left"
     overlay
     bordered
@@ -42,7 +43,7 @@ const links = [
     title: 'Puntos de Cuenta',
     icon: 'list',
     children: [
-      { title: 'Punto de Cuenta', route: 'puntos-cuenta' },
+      { title: 'Punto de Cuenta', route: 'puntos' },
       { title: 'Revisar Punto de Cuenta', route: 'revisar-puntos' },
       { title: 'Aprobar Punto de Cuenta', route: 'aprobar-puntos' },
     ],
@@ -72,7 +73,14 @@ const updateDrawer = (value) => {
 };
 
 const handleNavigation = (route) => {
-  router.push(`/${route}`);
+  // router.push(`/${route}`);
   emit('update:drawerOpen', false); // Cierra el drawer después de navegar
+
+  console.log("pepe");
+  Notify.create({
+    message: 'Navegando a ' + route,
+    color: 'primary',
+    position: 'top',
+  });
 };
 </script>
